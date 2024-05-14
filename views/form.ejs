@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <!-- bootstrap css -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- fontawesome css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+        .completed-task {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <h2 class="text-center mb-3">Add Task</h2>
+        <form action="/insertData" method="post" class="row">
+            <div class="form-group col-md-3">
+                <label for="taskId">Task ID</label>
+                <input type="number" class="form-control" id="taskId" name="taskId" placeholder="Enter task ID" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="taskName">Task Name</label>
+                <input type="text" class="form-control" id="taskName" name="name" placeholder="Enter task name" required>
+            </div>
+            <div class="form-group col-md-3">
+                <label for=""></label>
+                <button type="submit" class="btn btn-primary btn-block mt-2">Add Task</button>
+            </div>
+        </form>
+
+        <h2 class="mt-5 text-center">Todo List</h2>
+        <table class="table table-dark mt-3 table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Task ID</th>
+                    <th style="text-align: center;">Task Name</th>
+                    <th style="text-align: center;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% user.forEach((task, index) => { %>
+                <tr>
+                    <td style="text-align: center; ">
+                        <%= task.taskId %>
+                    </td>
+                    <td style="text-align: center; " id="task<%= index %>" class="<%= task.completed ? 'completed-task' : '' %>">
+                        <%= task.name %>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="/editData?taskId=<%= task.taskId %>" class="btn btn-primary btn-sm mr-2 edit-btn <%= task.completed ? 'disabled' : '' %>">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="/completeTask?taskId=<%= task.taskId %>" class="btn btn-success btn-sm mr-2 complete-btn">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                        <a href="/deleteData?taskId=<%= task.taskId %>" class="btn btn-danger btn-sm">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- bootstrap js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html> 
